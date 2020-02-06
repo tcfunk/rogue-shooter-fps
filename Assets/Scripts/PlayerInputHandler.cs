@@ -25,6 +25,9 @@ public class PlayerInputHandler : MonoBehaviour
     {
         characterController = GetComponent<CharacterController>();
         playerCamera = GetComponentInChildren<Camera>().transform;
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     // Update is called once per frame
@@ -53,8 +56,20 @@ public class PlayerInputHandler : MonoBehaviour
     void Fire(Vector3 fireDirection)
     {
         StartCoroutine(Cooldown(fireDelay));
-        var projectileObject = Instantiate(projectile, firePosition.position, Quaternion.identity);
-        projectileObject.GetComponent<Projectile>().projectileDirection = fireDirection;
+        //var projectileInstance = Instantiate(projectile, firePosition.position, Quaternion.identity);
+        //projectileInstance.GetComponent<Projectile>().projectileDirection = fireDirection;
+        //projectileInstance.GetComponent<Projectile>().Fire(fireDirection);
+
+        for (var i = 0; i < 10; i++)
+        {
+            Vector3 spread = Random.insideUnitCircle * 0.1f;
+            var skewedDirection = new Vector3(
+                fireDirection.x + spread.x,
+                fireDirection.y + spread.y,
+                fireDirection.z);
+            var projectileInstance = Instantiate(projectile, firePosition.position, Quaternion.identity);
+            projectileInstance.GetComponent<Projectile>().projectileDirection = skewedDirection;
+        }
     }
 
     private IEnumerator Cooldown(float duration)

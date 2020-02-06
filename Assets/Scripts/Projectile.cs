@@ -32,6 +32,10 @@ public class Projectile : MonoBehaviour
         }
     }
 
+    public void Fire(Vector3 fireDirection)
+    {
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         Destroy(gameObject);
