@@ -63,10 +63,7 @@ public class PlayerInputHandler : MonoBehaviour
         for (var i = 0; i < 10; i++)
         {
             Vector3 spread = Random.insideUnitCircle * 0.1f;
-            var skewedDirection = new Vector3(
-                fireDirection.x + spread.x,
-                fireDirection.y + spread.y,
-                fireDirection.z);
+            var skewedDirection = fireDirection + (spread.x * playerCamera.right) + (spread.y * playerCamera.up);
             var projectileInstance = Instantiate(projectile, firePosition.position, Quaternion.identity);
             projectileInstance.GetComponent<Projectile>().projectileDirection = skewedDirection;
         }
