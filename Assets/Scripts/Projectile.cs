@@ -6,6 +6,7 @@ public class Projectile : MonoBehaviour
 {
     public float projectileSpeed;
     public float maxDistance;
+    public int baseProjectileCount = 3;
     public Vector3 projectileDirection;
     public Vector3 startPosition;
 
@@ -24,16 +25,12 @@ public class Projectile : MonoBehaviour
 
     private void Update()
     {
-        transform.position += projectileDirection * projectileSpeed * Time.deltaTime;
+        transform.position += projectileSpeed * Time.deltaTime * projectileDirection;
 
         if (DistanceTraveled > maxDistance)
         {
             Destroy(gameObject);
         }
-    }
-
-    public void Fire(Vector3 fireDirection)
-    {
     }
 
     private void OnTriggerEnter(Collider other)

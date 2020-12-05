@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.MPE;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
@@ -35,7 +36,7 @@ public class PlayerInputHandler : MonoBehaviour
     {
         Vector3 moveX = Input.GetAxis("Horizontal") * transform.right;
         Vector3 moveZ = Input.GetAxis("Vertical") * transform.forward;
-        characterController.Move((moveX + moveZ).normalized * moveSpeed * Time.deltaTime);
+        characterController.Move(moveSpeed * Time.deltaTime * (moveX + moveZ).normalized);
 
         // Rotate character transform around y (turn left & right).
         float yRotation = Input.GetAxis("Mouse X") * lookSpeed;
@@ -53,20 +54,32 @@ public class PlayerInputHandler : MonoBehaviour
         }
     }
 
+    int GetProjectileCount()
+    {
+        var projectileCount = projectile.baseProjectileCount;
+
+        return projectileCount;
+    }
+
+    void GetProjectileDirections(Vector3 originalDirection)
+    {
+        var numProjectiles = GetProjectileCount();
+    }
+
     void Fire(Vector3 fireDirection)
     {
         StartCoroutine(Cooldown(fireDelay));
-        //var projectileInstance = Instantiate(projectile, firePosition.position, Quaternion.identity);
-        //projectileInstance.GetComponent<Projectile>().projectileDirection = fireDirection;
+        var projectileInstance = Instantiate(projectile, firePosition.position, Quaternion.identity);
+        projectileInstance.GetComponent<Projectile>().projectileDirection = fireDirection;
         //projectileInstance.GetComponent<Projectile>().Fire(fireDirection);
 
-        for (var i = 0; i < 10; i++)
-        {
-            Vector3 spread = Random.insideUnitCircle * 0.1f;
-            var skewedDirection = fireDirection + (spread.x * playerCamera.right) + (spread.y * playerCamera.up);
-            var projectileInstance = Instantiate(projectile, firePosition.position, Quaternion.identity);
-            projectileInstance.GetComponent<Projectile>().projectileDirection = skewedDirection;
-        }
+        // for (var i = 0; i < 10; i++)
+        // {
+        //     Vector3 spread = Random.insideUnitCircle * 0.1f;
+        //     var skewedDirection = fireDirection + (spread.x * playerCamera.right) + (spread.y * playerCamera.up);
+        //     var projectileInstance = Instantiate(projectile, firePosition.position, Quaternion.identity);
+        //     projectileInstance.GetComponent<Projectile>().projectileDirection = skewedDirection;
+        // }
     }
 
     private IEnumerator Cooldown(float duration)
