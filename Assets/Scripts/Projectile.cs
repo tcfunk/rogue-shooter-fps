@@ -8,7 +8,7 @@ public class Projectile : MonoBehaviour
     public float baseDamage = 1.0f;
     public float projectileSpeed;
     public float maxDistance;
-    public int baseProjectileCount = 3;
+    public int baseProjectileCount = 1;
     public Vector3 projectileDirection;
     public Vector3 startPosition;
 
@@ -38,8 +38,7 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("collision");
-        other.SendMessage("TakeDamage", baseDamage);
+        other.SendMessageUpwards("TakeDamage", baseDamage);
         Destroy(gameObject);
     }
 }
