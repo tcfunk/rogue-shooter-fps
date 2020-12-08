@@ -1,9 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+    public float baseDamage = 1.0f;
     public float projectileSpeed;
     public float maxDistance;
     public int baseProjectileCount = 3;
@@ -33,8 +35,11 @@ public class Projectile : MonoBehaviour
         }
     }
 
+
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("collision");
+        other.SendMessage("TakeDamage", baseDamage);
         Destroy(gameObject);
     }
 }
