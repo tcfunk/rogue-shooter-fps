@@ -1,25 +1,33 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Unity.MPE;
+// using Unity.MPE;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerInputHandler : MonoBehaviour
 {
-    public float moveSpeed = 10f;
-    public float lookSpeed = 3f;
+    [SerializeField]
+    private float moveSpeed = 10f;
+    [SerializeField]
+    private float lookSpeed = 3f;
 
     private CharacterController characterController;
     private Transform playerCamera;
 
-    public float cameraMaxAngle = 60f;
-    public float cameraMinAngle = -60f;
+    [SerializeField]
+    private float cameraMaxAngle = 60f;
+    [SerializeField]
+    private float cameraMinAngle = -60f;
     private float cameraRotation = 0f;
-    public bool invertCameraRotation = false;
+    [SerializeField]
+    private bool invertCameraRotation = false;
 
-    public Projectile projectile;
-    public Transform firePosition;
-    public float fireDelay = 0.3f;
+    [SerializeField]
+    private Projectile projectile;
+    [SerializeField]
+    private Transform firePosition;
+    [SerializeField]
+    private float fireDelay = 0.3f;
     private bool canFire = true;
 
     [SerializeField]
